@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="col-md-8 col-md-offset-2">
+    <h4>List Employee</h4>
+    <table class="table table-striped" style="margin-top: 50px;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Contact Number</th>
+          <th>Email</th>
+          <th>Designation</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let singleEmploye of paginate(employeeList,itemPerPage,currentPage);let index=index">
+          <ng-container *ngIf="expandMap[singleEmploye['employeeId']] != undefined && expandMap[singleEmploye['employeeId']]">
+            <td colspan="6">
+              <app-addemployee (employeeSaved)="employeeSavedFunction($event)" [employeeId]="singleEmploye['employeeId']"></app-addemployee>
+              <button class="btn pull-right" (click)="undoEditEmployee(singleEmploye['employeeId'])"><i class="fa fa-arrow-up"></i></button>
+            </td>
+           
+          </ng-container>
+          <ng-container *ngIf="!(expandMap[singleEmploye['employeeId']] != undefined && expandMap[singleEmploye['employeeId']])">
+            <td>{{((currentPage-1)*itemPerPage) +index+1}}</td>
+            <td>{{singleEmploye["fname"]+' '+singleEmploye["lname"]}}</td>
+            <td>{{singleEmploye["contactNumber"]}}</td>
+            <td>{{singleEmploye["email"]}}</td>
+            <td>{{singleEmploye["designation"]}}</td>
+            <td>
+              <button class="btn" (click)="editEmployee(singleEmploye['employeeId'])"><i class="fa fa-arrow-down"></i></button>
+              <button class="btn" (click)="deleteEmployee(singleEmploye['employeeId'])"><i class="fa fa-trash"></i></button>
+            </td>
+          </ng-container>
+           
+        </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item {{ (currentPage != 1)?'':'disabled'}} "><a class="page-link" (click)="(currentPage != 1)?currentPage = currentPage-1:''" href="javascript:void(0)">Previous</a></li>
+        <li class="page-item"><a href="javascript:void(0)" style=" color: black; border: none; ">Current Page: {{this.currentPage  }}</a></li>
+        <li class="page-item"><a href="javascript:void(0)" style=" color: black; border: none; ">Item Per Page: {{this.itemPerPage  }}</a></li>
+        <li class="page-item"><a href="javascript:void(0)" style=" color: black; border: none; ">Total Pages: {{this.numPages()  }}</a></li>
+        <li class="page-item"><a href="javascript:void(0)" style=" color: black; border: none; ">Total Employee: {{this.totalItems  }}</a></li>
+        <li class="page-item {{ (currentPage != numPages())?'':'disabled' }} "><a class="page-link" href="javascript:void(0)"  (click)="(currentPage != numPages())?currentPage = currentPage+1:''" >Next</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>

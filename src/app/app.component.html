@@ -1,0 +1,31 @@
+
+<!-- Toolbar -->
+
+   
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">UcoDice Employee Portal</a>
+        </div>
+        <ul class="nav navbar-nav navbar-left">
+         
+         <li><a class="nav-link" routerLinkActive="active" [routerLink]="['employee/add']">Add Employee</a></li>
+          <li><a  class="nav-link" routerLinkActive="active" [routerLink]="['employee/list']">Employee List</a></li>
+        </ul>
+      </div>
+    </nav>
+
+<div class="content" role="main">
+  <router-outlet></router-outlet>
+</div>
+<nav class="navbar-default" style="margin-top: 50px;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Copyright</a>
+    </div>
+   \
+  </div>
+</nav>
+
+
+

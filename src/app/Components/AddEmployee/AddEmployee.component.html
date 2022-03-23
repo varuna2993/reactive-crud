@@ -1,0 +1,166 @@
+<div class="row">
+
+  <div class="{{employeeId == '0' ? 'col-md-6 col-md-offset-3':''}}">
+    <h3>Add Employee form:</h3>
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+
+      <!-- First Name -->
+      <div class="form-group">
+        <label for="fname">First Name:</label>
+        <input required minlength="3" maxlength="20" type="text" class="form-control" id="fname" formControlName="fname"
+          [pattern]="'^[a-zA-Z ]*$'">
+        <div
+          *ngIf="employeeForm.controls['fname'].invalid && ( employeeForm.controls['fname'].dirty || employeeForm.controls['fname'].touched)"
+          class="alert alert-danger">
+
+          <div *ngIf="employeeForm.controls['fname'].errors?.['required']">
+            First Name is required.
+          </div>
+          <div *ngIf="employeeForm.controls['fname'].errors?.['minlength']">
+            First Name must be at least 3 characters long.
+          </div>
+          <div *ngIf="employeeForm.controls['fname'].errors?.['maxlength']">
+            First Name must not be more than 20 characters long.
+          </div>
+          <div *ngIf="employeeForm.controls['fname'].errors?.['pattern']">
+            First Name should contain only alphabets.
+          </div>
+        </div>
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group">
+        <label for="lname">Last Name:</label>
+        <input required minlength="3" maxlength="20" type="text" class="form-control" id="lname" formControlName="lname"
+          [pattern]="'^[a-zA-Z ]*$'">
+        <div
+          *ngIf="employeeForm.controls['lname'].invalid && ( employeeForm.controls['lname'].dirty || employeeForm.controls['lname'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="employeeForm.controls['lname'].errors?.['required']">
+            Last Name is required.
+          </div>
+          <div *ngIf="employeeForm.controls['lname'].errors?.['minlength']">
+            Last Name must be at least 3 characters long.
+          </div>
+          <div *ngIf="employeeForm.controls['lname'].errors?.['maxlength']">
+            Last Name must not be more than 20 characters long.
+          </div>
+          <div *ngIf="employeeForm.controls['lname'].errors?.['pattern']">
+            Last Name should contain only alphabets.
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact number -->
+      <div class="form-group">
+        <label for="contactNumber">Contact number:</label>
+        <input maxlength="10" type="text" class="form-control" id="contactNumber" formControlName="contactNumber"
+          [pattern]="'^[6-9][0-9]{9}$'">
+        <div
+          *ngIf="employeeForm.controls['contactNumber'].invalid && ( employeeForm.controls['contactNumber'].dirty || employeeForm.controls['contactNumber'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="employeeForm.controls['contactNumber'].errors?.['required']">
+            Contact Number is required.
+          </div>
+          <div *ngIf="employeeForm.controls['contactNumber'].errors?.['maxlength']">
+            Please enter 10 digit phone number.
+          </div>
+          <div *ngIf="employeeForm.controls['contactNumber'].errors?.['pattern']">
+            Please enter valid phone number.
+          </div>
+        </div>
+      </div>
+
+      <!-- Alternate Contact number -->
+      <div class="form-group">
+        <label for="alternumber">Alternate Contact number (Optional):</label>
+        <input minlength="3" maxlength="20" type="text" class="form-control" id="alternumber"
+          formControlName="alternumber" [pattern]="'^[a-zA-Z ]*$'">
+        <div
+          *ngIf="employeeForm.controls['alternumber'].invalid && ( employeeForm.controls['alternumber'].dirty || employeeForm.controls['alternumber'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="employeeForm.controls['alternumber'].errors?.['required']">
+            Alternate Contact number is required.
+          </div>
+          <div *ngIf="employeeForm.controls['alternumber'].errors?.['minlength']">
+            Alternate Contact number must be at least 3 characters long.
+          </div>
+          <div *ngIf="employeeForm.controls['alternumber'].errors?.['maxlength']">
+            Alternate Contact number must not be more than 20 characters long.
+          </div>
+          <div *ngIf="employeeForm.controls['alternumber'].errors?.['pattern']">
+            Alternate Contact number should contain only alphabets.
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" formControlName="email">
+        <div
+          *ngIf="!employeeForm.controls['email'].valid && (employeeForm.controls['email'].dirty ||employeeForm.controls['email'].touched)"
+          class="alert alert-danger">
+
+          <div [hidden]="!employeeForm.controls['email'].errors?.['required']">
+            email is required
+          </div>
+          <div [hidden]="!employeeForm.controls['email'].errors?.['email']">
+            Invalid email id
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Permanent Address -->
+      <div class="form-group">
+        <label for="permAddress">Permanent Address:</label>
+        <input type="text" class="form-control" id="permAddress" formControlName="permAddress">
+        <div
+          *ngIf="!employeeForm.controls['permAddress'].valid && (employeeForm.controls['permAddress'].dirty ||employeeForm.controls['permAddress'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="employeeForm.controls['permAddress'].errors?.['required']">
+            Permanent Address is required.
+          </div>
+          <div *ngIf="employeeForm.controls['permAddress'].errors?.['pattern']">
+            Permanent Address is not valid.
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Checkbox  -->
+      <div class="checkbox">
+        <label><input (change)="sameAsPermanent($event)" type="checkbox" id="checkAddress" formControlName="checkAddress"> Same as Permanent
+          Address</label>
+        </div>
+
+        <!-- Temporary Address -->
+        <div class="form-group" *ngIf="!employeeForm.value.checkAddress">
+          <label for="tempAddress">Temporary Address:</label>
+          <input type="text" class="form-control" id="tempAddress" formControlName="tempAddress">
+          <div
+          *ngIf="!employeeForm.controls['tempAddress'].valid && (employeeForm.controls['tempAddress'].dirty ||employeeForm.controls['tempAddress'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="employeeForm.controls['tempAddress'].errors?.['required']">
+            Permanent Address is required.
+          </div>
+          <div *ngIf="employeeForm.controls['tempAddress'].errors?.['pattern']">
+            Permanent Address is not valid.
+          </div>
+        </div>
+        </div>
+
+        <!-- Designation -->
+        <div class="form-group">
+          <label for="designation">Designation:</label>
+          <select formControlName="designation" class="form-control">
+            <option value="">Choose Designation</option>
+            <option *ngFor="let des of designationList" value="{{des}}">{{des}}</option>
+        </select>
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+  </div>
+</div>
